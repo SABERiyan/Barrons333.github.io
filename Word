@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barron's SAT Vocabulary — Interactive eBook</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Share+Tech+Mono&family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ─── THEME VARIABLES ─── */
+[data-theme="dark"] {
+  --bg:#0d0d0d; --bg2:#161616; --surf:#1c1c1c; --surf2:#242424;
+  --border:rgba(255,255,255,0.07); --text:#e2e2e2; --dim:#777;
+  --bright:#fff; --acc:#e8d5a3; --acc2:#c9a96e; --acc3:#a07840;
+  --card-bg:#1c1c1c; --nav:#0d0d0d; --prog:#e8d5a3;
+  --tag-bg:rgba(232,213,163,0.1); --tag:##e8d5a3;
+  --shadow:0 8px 32px rgba(0,0,0,0.5); --invert:0;
+}
+[data-theme="gold"] {
+  --bg:#130e00; --bg2:#1c1500; --surf:#251c00; --surf2:#301f00;
+  --border:rgba(255,210,0,0.15); --text:#f0dfa0; --dim:#9a7c30;
+  --bright:#ffd700; --acc:#ffd700; --acc2:#ffb300; --acc3:#cc8800;
+  --card-bg:#251c00; --nav:#130e00; --prog:#ffd700;
+  --tag-bg:rgba(255,215,0,0.12); --tag:#ffd700;
+  --shadow:0 8px 32px rgba(255,215,0,0.15); --invert:0;
+}
+[data-theme="cyber"] {
+  --bg:#020b18; --bg2:#030f20; --surf:#071524; --surf2:#0b1d30;
+  --border:rgba(0,240,195,0.12); --text:#a8cfe0; --dim:#3d7a96;
+  --bright:#00f0c3; --acc:#00f0c3; --acc2:#00b8ff; --acc3:#0080cc;
+  --card-bg:#071524; --nav:#020b18; --prog:#00f0c3;
+  --tag-bg:rgba(0,240,195,0.08); --tag:#00f0c3;
+  --shadow:0 8px 32px rgba(0,240,195,0.1); --invert:0;
+}
+[data-theme="neon"] {
+  --bg:#08000f; --bg2:#0f0018; --surf:#130020; --surf2:#1a002d;
+  --border:rgba(230,0,255,0.12); --text:#ddb0f5; --dim:#7a3a9a;
+  --bright:#e600ff; --acc:#e600ff; --acc2:#ff4dff; --acc3:#aa00cc;
+  --card-bg:#130020; --nav:#08000f; --prog:#e600ff;
+  --tag-bg:rgba(230,0,255,0.1); --tag:#e600ff;
+  --shadow:0 8px 32px rgba(230,0,255,0.15); --invert:0;
+}
+[data-theme="festive"] {
+  --bg:#160800; --bg2:#200c00; --surf:#2c1200; --surf2:#381800;
+  --border:rgba(255,130,0,0.15); --text:#ffe0b0; --dim:#aa6020;
+  --bright:#ff8c00; --acc:#ff6a00; --acc2:#ffcc00; --acc3:#dd4400;
+  --card-bg:#2c1200; --nav:#160800; --prog:#ff6a00;
+  --tag-bg:rgba(255,106,0,0.12); --tag:#ff8c00;
+  --shadow:0 8px 32px rgba(255,106,0,0.2); --invert:0;
+}
+[data-theme="paper"] {
+  --bg:#f3ede0; --bg2:#e8e0cf; --surf:#fff; --surf2:#faf5ec;
+  --border:rgba(0,0,0,0.1); --text:#2a1f0e; --dim:#8c7a60;
+  --bright:#1a1000; --acc:#8b4513; --acc2:#a0522d; --acc3:#6b3010;
+  --card-bg:#fff; --nav:#f3ede0; --prog:#8b4513;
+  --tag-bg:rgba(139,69,19,0.09); --tag:#8b4513;
+  --shadow:0 8px 32px rgba(0,0,0,0.12); --invert:1;
+}
+[data-theme="white"] {
+  --bg:#f5f7fb; --bg2:#edf0f7; --surf:#ffffff; --surf2:#f0f4ff;
+  --border:rgba(0,0,0,0.07); --text:#1a1e36; --dim:#6c7898;
+  --bright:#000; --acc:#2563eb; --acc2:#1d4ed8; --acc3:#1e40af;
+  --card-bg:#ffffff; --nav:#ffffff; --prog:#2563eb;
+  --tag-bg:rgba(37,99,235,0.07); --tag:#2563eb;
+  --shadow:0 8px 32px rgba(37,99,235,0.08); --invert:1;
+}
+
+/* ─── BASE ─── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'Poppins',sans-serif; font-size:15px;
+  line-height:1.6; min-height:100vh;
+  transition:background .35s,color .35s;
+}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--acc);border-radius:3px}
+
+/* ─── TOP BAR ─── */
+#topbar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:var(--nav);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  padding:8px 20px;display:flex;align-items:center;
+  gap:14px;flex-wrap:wrap;
+  transition:background .35s;
+}
+#topbar .brand{
+  font-family:'Share Tech Mono';font-size:13px;
+  color:var(--acc);letter-spacing:2px;white-space:nowrap;
+  margin-right:4px;
+}
+.ctrl-sep{width:1px;height:22px;background:var(--border);flex-shrink:0}
+
+/* theme dots */
+.tdot{
+  width:22px;height:22px;border-radius:50%;border:2px solid transparent;
+  cursor:pointer;transition:all .2s;flex-shrink:0;
+}
+.tdot:hover,.tdot.on{border-color:var(--acc);transform:scale(1.2)}
+.tdot.on::after{content:'✓';position:absolute;inset:0;display:flex;
+  align-items:center;justify-content:center;font-size:10px;
+  font-weight:700;color:#fff;text-shadow:0 0 3px #000}
+.tdot{position:relative}
+.td-dark{background:linear-gradient(135deg,#1c1c1c,#555)}
+.td-gold{background:linear-gradient(135deg,#ffd700,#a07000)}
+.td-cyber{background:linear-gradient(135deg,#00f0c3,#0088ff)}
+.td-neon{background:linear-gradient(135deg,#e600ff,#5500ee)}
+.td-festive{background:linear-gradient(135deg,#ff6a00,#ffcc00)}
+.td-paper{background:linear-gradient(135deg,#f3ede0,#c8a870);border:1px solid #ccc}
+.td-white{background:linear-gradient(135deg,#fff,#c8d8ff);border:1px solid #bbb}
+
+/* search */
+#searchbox{
+  flex:1;min-width:160px;max-width:280px;
+  display:flex;align-items:center;gap:8px;
+  background:var(--surf2);border:1px solid var(--border);
+  border-radius:24px;padding:5px 14px;
+  transition:border-color .2s;
+}
+#searchbox:focus-within{border-color:var(--acc)}
+#searchbox input{
+  background:none;border:none;outline:none;
+  color:var(--text);font-family:'Poppins';font-size:13px;width:100%;
+}
+#searchbox input::placeholder{color:var(--dim)}
+#searchbox span{color:var(--dim);font-size:14px}
+
+/* mode tabs */
+.mtab{
+  padding:5px 14px;border-radius:20px;font-size:12px;
+  font-weight:600;letter-spacing:1px;cursor:pointer;
+  border:1px solid var(--border);color:var(--dim);
+  background:transparent;font-family:'Poppins';
+  transition:all .2s;white-space:nowrap;
+}
+.mtab:hover{border-color:var(--acc);color:var(--acc)}
+.mtab.on{background:var(--acc);color:var(--bg);border-color:var(--acc)}
+
+/* progress */
+#prog-bar{
+  position:fixed;top:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--acc),var(--acc2));
+  z-index:201;transition:width .12s;
+}
+
+/* ─── LAYOUT ─── */
+#wrap{max-width:1060px;margin:0 auto;padding:72px 16px 60px}
+
+/* ─── HERO COVER ─── */
+#cover{
+  min-height:340px;
+  background:linear-gradient(135deg,var(--surf2),var(--surf));
+  border:1px solid var(--border);border-radius:18px;
+  padding:48px 44px;margin-bottom:28px;
+  position:relative;overflow:hidden;
+  box-shadow:var(--shadow);
+  display:flex;flex-direction:column;justify-content:center;
+}
+#cover::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(var(--acc-rgb,.5,.5,.5),0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(var(--acc-rgb,.5,.5,.5),0.03) 1px,transparent 1px);
+  background-size:36px 36px;pointer-events:none;
+}
+.cover-eyebrow{
+  font-family:'Share Tech Mono';font-size:11px;
+  letter-spacing:4px;color:var(--acc);text-transform:uppercase;
+  margin-bottom:14px;opacity:.8;
+}
+.cover-h1{
+  font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;
+  color:var(--bright);line-height:1.15;margin-bottom:10px;
+}
+.cover-h1 span{color:var(--acc)}
+.cover-sub{font-size:14px;color:var(--dim);max-width:460px;margin-bottom:28px}
+.cover-stats{display:flex;gap:24px;flex-wrap:wrap}
+.cstat{
+  display:flex;flex-direction:column;gap:2px;
+  padding:14px 20px;background:var(--bg);
+  border:1px solid var(--border);border-radius:10px;
+  min-width:110px;transition:border-color .2s;
+}
+.cstat:hover{border-color:var(--acc)}
+.cstat-val{
+  font-family:'Share Tech Mono';font-size:1.5rem;
+  font-weight:700;color:var(--acc);
+}
+.cstat-lbl{font-size:11px;color:var(--dim);letter-spacing:1px}
+
+/* ─── ALPHABET NAV ─── */
+#alpha-nav{
+  display:flex;flex-wrap:wrap;gap:5px;
+  margin-bottom:20px;
+}
+.al-btn{
+  width:32px;height:32px;border-radius:6px;
+  font-size:12px;font-weight:700;cursor:pointer;
+  border:1px solid var(--border);background:var(--surf);
+  color:var(--dim);transition:all .15s;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Share Tech Mono';
+}
+.al-btn:hover,.al-btn.on{
+  background:var(--acc);color:var(--bg);
+  border-color:var(--acc);transform:scale(1.05);
+}
+.al-btn.empty{opacity:.25;pointer-events:none}
+
+/* ─── FILTER ROW ─── */
+#filter-row{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:20px;flex-wrap:wrap;
+}
+.fcount{
+  font-family:'Share Tech Mono';font-size:12px;
+  color:var(--dim);margin-left:auto;
+}
+
+/* ─── WORD GRID ─── */
+#word-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:14px;
+}
+
+/* ─── WORD CARD ─── */
+.wcard{
+  background:var(--card-bg);
+  border:1px solid var(--border);
+  border-radius:12px;padding:18px 20px;
+  cursor:pointer;position:relative;overflow:hidden;
+  transition:transform .2s,border-color .2s,box-shadow .2s;
+  display:flex;flex-direction:column;gap:8px;
+}
+.wcard::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--acc),var(--acc2));
+  transform:scaleX(0);transform-origin:left;transition:transform .25s;
+}
+.wcard:hover{
+  transform:translateY(-3px);border-color:var(--acc);
+  box-shadow:var(--shadow);
+}
+.wcard:hover::after{transform:scaleX(1)}
+.wcard.starred .star-btn{color:var(--acc)}
+
+.wcard-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.wnum{
+  font-family:'Share Tech Mono';font-size:10px;
+  color:var(--dim);letter-spacing:2px;
+}
+.wword{
+  font-size:1.15rem;font-weight:700;color:var(--bright);
+  letter-spacing:.3px;flex:1;
+}
+.star-btn{
+  background:none;border:none;cursor:pointer;
+  font-size:16px;color:var(--dim);transition:color .2s,transform .2s;
+  flex-shrink:0;padding:0;line-height:1;
+}
+.star-btn:hover{color:var(--acc);transform:scale(1.2)}
+
+.wen{
+  font-size:12.5px;color:var(--dim);
+  font-style:italic;line-height:1.45;
+}
+.wbn{
+  font-family:'Noto Sans Bengali','Poppins',sans-serif;
+  font-size:13.5px;color:var(--acc);font-weight:600;
+}
+.wex{
+  font-size:12px;color:var(--dim);
+  background:var(--surf2);padding:8px 12px;
+  border-radius:6px;border-left:2px solid var(--acc);
+  line-height:1.5;margin-top:4px;
+}
+.wtags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.wtag{
+  padding:3px 10px;border-radius:12px;
+  font-size:11px;font-weight:600;
+  background:var(--tag-bg);color:var(--acc);
+  border:1px solid var(--acc);opacity:.85;
+}
+
+/* ─── FLIP CARD (flashcard mode) ─── */
+#flashcard-wrap{
+  display:none;
+  flex-direction:column;align-items:center;gap:24px;
+  padding:20px 0;
+}
+.fc-progress{
+  font-family:'Share Tech Mono';font-size:13px;
+  color:var(--dim);letter-spacing:2px;
+}
+.fc-scene{
+  width:100%;max-width:520px;height:280px;
+  perspective:1000px;cursor:pointer;
+}
+.fc-card{
+  width:100%;height:100%;position:relative;
+  transform-style:preserve-3d;transition:transform .5s;
+}
+.fc-card.flipped{transform:rotateY(180deg)}
+.fc-front,.fc-back{
+  position:absolute;inset:0;
+  backface-visibility:hidden;
+  border-radius:18px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:36px;text-align:center;
+  border:1px solid var(--border);
+  background:var(--surf);box-shadow:var(--shadow);
+}
+.fc-back{transform:rotateY(180deg);background:var(--surf2)}
+.fc-label{
+  font-family:'Share Tech Mono';font-size:10px;
+  letter-spacing:4px;color:var(--dim);margin-bottom:16px;
+}
+.fc-word{font-size:2.2rem;font-weight:800;color:var(--bright)}
+.fc-bn{
+  font-family:'Noto Sans Bengali','Poppins',sans-serif;
+  font-size:1.4rem;color:var(--acc);font-weight:700;
+  margin-bottom:10px;
+}
+.fc-en{font-size:14px;color:var(--dim);max-width:360px}
+.fc-ex{
+  font-size:12.5px;color:var(--dim);font-style:italic;
+  background:var(--bg);padding:10px 16px;border-radius:8px;
+  margin-top:12px;border-left:2px solid var(--acc);
+}
+.fc-hint{font-size:11px;color:var(--dim);letter-spacing:2px;margin-top:10px}
+.fc-nav{display:flex;gap:14px;align-items:center}
+.fc-btn{
+  padding:10px 28px;border-radius:24px;
+  border:1px solid var(--border);background:var(--surf);
+  color:var(--text);font-family:'Poppins';font-size:13px;
+  font-weight:600;cursor:pointer;transition:all .2s;
+}
+.fc-btn:hover,.fc-btn.primary{
+  background:var(--acc);color:var(--bg);border-color:var(--acc);
+}
+.fc-btn:disabled{opacity:.3;pointer-events:none}
+.fc-shuffle{
+  padding:8px 18px;border-radius:20px;
+  border:1px solid var(--border);background:var(--surf);
+  color:var(--dim);font-family:'Share Tech Mono';font-size:11px;
+  cursor:pointer;transition:all .2s;letter-spacing:1px;
+}
+.fc-shuffle:hover{border-color:var(--acc);color:var(--acc)}
+
+/* ─── QUIZ MODE ─── */
+#quiz-wrap{display:none;flex-direction:column;align-items:center;gap:20px;padding:20px 0}
+.qz-panel{width:100%;max-width:560px}
+.qz-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:18px;
+}
+.qz-score{font-family:'Share Tech Mono';font-size:13px;color:var(--acc)}
+.qz-question{
+  background:var(--surf);border:1px solid var(--border);
+  border-radius:14px;padding:28px 32px;margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+.qz-qtype{
+  font-family:'Share Tech Mono';font-size:10px;
+  color:var(--dim);letter-spacing:3px;margin-bottom:12px;
+}
+.qz-qword{font-size:1.8rem;font-weight:800;color:var(--bright);margin-bottom:8px}
+.qz-qsub{font-size:14px;color:var(--dim);font-style:italic}
+.qz-options{display:flex;flex-direction:column;gap:10px}
+.qz-opt{
+  padding:14px 20px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surf);
+  color:var(--text);font-size:14px;font-weight:500;
+  cursor:pointer;transition:all .2s;text-align:left;
+  font-family:'Poppins';
+}
+.qz-opt:hover:not(:disabled){
+  border-color:var(--acc);background:var(--surf2);
+}
+.qz-opt.correct{border-color:#22c55e;background:rgba(34,197,94,.12);color:#22c55e}
+.qz-opt.wrong{border-color:#ef4444;background:rgba(239,68,68,.12);color:#ef4444}
+.qz-opt:disabled{cursor:default}
+.qz-feedback{
+  padding:14px 20px;border-radius:10px;
+  font-size:14px;font-weight:600;margin-top:6px;
+  display:none;
+}
+.qz-feedback.show{display:block}
+.qz-feedback.ok{background:rgba(34,197,94,.1);color:#22c55e;border:1px solid #22c55e}
+.qz-feedback.bad{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid #ef4444}
+.qz-next{
+  width:100%;padding:13px;border-radius:10px;
+  border:none;background:var(--acc);color:var(--bg);
+  font-family:'Poppins';font-size:14px;font-weight:700;
+  cursor:pointer;transition:opacity .2s;letter-spacing:1px;
+  margin-top:10px;display:none;
+}
+.qz-next.show{display:block}
+.qz-result{
+  width:100%;max-width:480px;
+  background:var(--surf);border:1px solid var(--border);
+  border-radius:16px;padding:40px;text-align:center;
+  box-shadow:var(--shadow);display:none;
+}
+.qz-result.show{display:block}
+.qz-result-score{
+  font-family:'Share Tech Mono';font-size:3rem;
+  color:var(--acc);font-weight:700;margin:16px 0;
+}
+.qz-result-lbl{font-size:14px;color:var(--dim)}
+.qz-restart{
+  padding:12px 32px;border-radius:24px;
+  background:var(--acc);color:var(--bg);
+  border:none;font-family:'Poppins';font-size:14px;
+  font-weight:700;cursor:pointer;margin-top:20px;
+  transition:opacity .2s;
+}
+.qz-restart:hover{opacity:.85}
+
+/* ─── STARRED VIEW ─── */
+#starred-empty{
+  display:none;text-align:center;padding:60px;
+  color:var(--dim);font-size:15px;
+}
+
+/* ─── EMPTY STATE ─── */
+#empty-state{
+  display:none;text-align:center;padding:60px;
+  color:var(--dim);font-size:15px;grid-column:1/-1;
+}
+
+/* ─── BACK TO TOP ─── */
+#btt{
+  position:fixed;bottom:24px;right:24px;
+  width:42px;height:42px;border-radius:50%;
+  background:var(--acc);color:var(--bg);
+  border:none;font-size:18px;cursor:pointer;
+  opacity:0;pointer-events:none;
+  transition:all .3s;box-shadow:0 4px 18px rgba(0,0,0,.3);
+  z-index:190;display:flex;align-items:center;justify-content:center;
+}
+#btt.vis{opacity:1;pointer-events:all}
+#btt:hover{transform:scale(1.1) translateY(-2px)}
+
+/* ─── MODAL (word detail) ─── */
+#modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.65);z-index:300;
+  backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;padding:16px;
+}
+#modal-overlay.open{display:flex}
+#modal{
+  background:var(--surf);border:1px solid var(--border);
+  border-radius:16px;width:min(520px,100%);
+  padding:32px;position:relative;
+  box-shadow:0 0 60px rgba(0,0,0,.4);
+  animation:popIn .25s ease both;
+}
+@keyframes popIn{from{opacity:0;transform:scale(.93)}to{opacity:1;transform:scale(1)}}
+#modal-close{
+  position:absolute;top:14px;right:14px;
+  background:none;border:1px solid var(--border);
+  color:var(--dim);width:30px;height:30px;
+  border-radius:6px;cursor:pointer;font-size:16px;
+  transition:all .2s;
+}
+#modal-close:hover{border-color:#ef4444;color:#ef4444}
+.modal-num{font-family:'Share Tech Mono';font-size:11px;color:var(--dim);letter-spacing:3px;margin-bottom:8px}
+.modal-word{font-size:2.2rem;font-weight:800;color:var(--bright);margin-bottom:6px}
+.modal-en{font-size:14px;color:var(--dim);font-style:italic;margin-bottom:16px;line-height:1.6}
+.modal-bn-label{font-family:'Share Tech Mono';font-size:10px;color:var(--dim);letter-spacing:3px;margin-bottom:6px;text-transform:uppercase}
+.modal-bn{
+  font-family:'Noto Sans Bengali','Poppins',sans-serif;
+  font-size:1.3rem;color:var(--acc);font-weight:700;
+  margin-bottom:20px;
+}
+.modal-ex-label{font-family:'Share Tech Mono';font-size:10px;color:var(--dim);letter-spacing:3px;margin-bottom:6px;text-transform:uppercase}
+.modal-ex{
+  background:var(--surf2);border-radius:8px;
+  border-left:3px solid var(--acc);padding:14px 16px;
+  font-size:14px;color:var(--text);line-height:1.6;font-style:italic;
+}
+.modal-actions{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+.modal-star{
+  padding:8px 20px;border-radius:20px;
+  border:1px solid var(--acc);color:var(--acc);
+  background:transparent;font-family:'Poppins';font-size:13px;
+  font-weight:600;cursor:pointer;transition:all .2s;
+}
+.modal-star:hover,.modal-star.on{background:var(--acc);color:var(--bg)}
+.modal-nav-btn{
+  padding:8px 18px;border-radius:20px;
+  border:1px solid var(--border);color:var(--dim);
+  background:transparent;font-family:'Poppins';font-size:13px;
+  cursor:pointer;transition:all .2s;
+}
+.modal-nav-btn:hover{border-color:var(--acc);color:var(--acc)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:600px){
+  #topbar{gap:8px;padding:7px 12px}
+  .cover-h1{font-size:1.6rem}
+  #cover{padding:28px 20px}
+  .cstat{min-width:80px;padding:10px 14px}
+  #word-grid{grid-template-columns:1fr 1fr}
+  .fc-word{font-size:1.6rem}
+  #modal{padding:22px}
+}
+@media(max-width:400px){
+  #word-grid{grid-template-columns:1fr}
+}
+
+/* ─── ANIMATIONS ─── */
+.wcard{animation:fadeUp .4s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.wcard:nth-child(2n){animation-delay:.04s}
+.wcard:nth-child(3n){animation-delay:.08s}
+.wcard:nth-child(4n){animation-delay:.12s}
+</style>
+</head>
+<body data-theme="dark">
+
+<div id="prog-bar"></div>
+
+<!-- ─── TOP BAR ─── -->
+<div id="topbar">
+  <div class="brand">SAT·VOCAB</div>
+  <div class="ctrl-sep"></div>
+
+  <!-- Theme dots -->
+  <div style="display:flex;gap:5px;align-items:center">
+    <button class="tdot td-dark on"    onclick="setTheme('dark',this)"    title="Dark"></button>
+    <button class="tdot td-gold"       onclick="setTheme('gold',this)"    title="Gold"></button>
+    <button class="tdot td-cyber"      onclick="setTheme('cyber',this)"   title="Cyber"></button>
+    <button class="tdot td-neon"       onclick="setTheme('neon',this)"    title="Neon"></button>
+    <button class="tdot td-festive"    onclick="setTheme('festive',this)" title="Festive"></button>
+    <button class="tdot td-paper"      onclick="setTheme('paper',this)"   title="Paper"></button>
+    <button class="tdot td-white"      onclick="setTheme('white',this)"   title="White"></button>
+  </div>
+  <div class="ctrl-sep"></div>
+
+  <!-- Mode tabs -->
+  <button class="mtab on" data-mode="browse" onclick="setMode('browse',this)">📖 Browse</button>
+  <button class="mtab"    data-mode="flash"  onclick="setMode('flash',this)">🃏 Flashcard</button>
+  <button class="mtab"    data-mode="quiz"   onclick="setMode('quiz',this)">🧠 Quiz</button>
+  <button class="mtab"    data-mode="starred" onclick="setMode('starred',this)">⭐ Starred</button>
+
+  <!-- Search -->
+  <div id="searchbox">
+    <span>🔍</span>
+    <input id="search-input" type="text" placeholder="Search word or বাংলা…" oninput="applySearch(this.value)">
+  </div>
+</div>
+
+<!-- ─── MAIN CONTENT ─── -->
+<div id="wrap">
+
+  <!-- COVER -->
+  <div id="cover">
+    <div class="cover-eyebrow">Barron's SAT Vocabulary · Interactive eBook</div>
+    <h1 class="cover-h1">333 <span>Power Words</span><br>for SAT Mastery</h1>
+    <p class="cover-sub">English meanings · বাংলা অর্থ · Example sentences · Flashcards · Quiz — all in one place.</p>
+    <div class="cover-stats">
+      <div class="cstat"><div class="cstat-val">299</div><div class="cstat-lbl">Words Loaded</div></div>
+      <div class="cstat"><div class="cstat-val" id="c-starred">0</div><div class="cstat-lbl">Starred</div></div>
+      <div class="cstat"><div class="cstat-val" id="c-quiz">0</div><div class="cstat-lbl">Quizzed</div></div>
+      <div class="cstat"><div class="cstat-val">2</div><div class="cstat-lbl">Languages</div></div>
+    </div>
+  </div>
+
+  <!-- BROWSE MODE -->
+  <div id="browse-wrap">
+    <!-- Alphabet Nav -->
+    <div id="alpha-nav"></div>
+
+    <!-- Filter row -->
+    <div id="filter-row">
+      <button class="mtab on" onclick="setFilter('all',this)">All</button>
+      <button class="mtab" onclick="setFilter('starred',this)">⭐ Starred</button>
+      <span class="fcount" id="fc-count">299 words</span>
+    </div>
+
+    <!-- Word Grid -->
+    <div id="word-grid"></div>
+    <div id="empty-state">No words found. Try a different search.</div>
+  </div>
+
+  <!-- FLASHCARD MODE -->
+  <div id="flashcard-wrap">
+    <div class="fc-progress" id="fc-prog">1 / 299</div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="fc-shuffle" onclick="shuffleFlash()">⇄ SHUFFLE</button>
+      <button class="fc-shuffle" onclick="resetFlash()">↺ RESET</button>
+      <button class="fc-shuffle" onclick="starredOnlyFlash()" id="fc-star-toggle">⭐ STARRED ONLY</button>
+    </div>
+    <div class="fc-scene" onclick="flipCard()">
+      <div class="fc-card" id="fc-card">
+        <div class="fc-front">
+          <div class="fc-label">WORD</div>
+          <div class="fc-word" id="fc-word">—</div>
+          <div class="fc-hint">TAP TO REVEAL MEANING</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">MEANING</div>
+          <div class="fc-bn" id="fc-bn">—</div>
+          <div class="fc-en" id="fc-en">—</div>
+          <div class="fc-ex" id="fc-ex">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-nav">
+      <button class="fc-btn" id="fc-prev" onclick="fcNav(-1)">← Prev</button>
+      <button class="fc-btn primary" onclick="fcNav(1)">Next →</button>
+    </div>
+    <div style="font-family:'Share Tech Mono';font-size:11px;color:var(--dim);text-align:center;letter-spacing:2px">
+      CLICK CARD TO FLIP · USE ARROW KEYS TO NAVIGATE
+    </div>
+  </div>
+
+  <!-- QUIZ MODE -->
+  <div id="quiz-wrap">
+    <div class="qz-panel">
+      <div class="qz-header">
+        <span style="font-family:'Share Tech Mono';font-size:12px;color:var(--dim);letter-spacing:2px">SAT QUIZ</span>
+        <span class="qz-score" id="qz-score">0 / 0</span>
+      </div>
+      <div id="qz-question-block">
+        <div class="qz-question" id="qz-q-box">
+          <div class="qz-qtype" id="qz-qtype">WHAT DOES THIS WORD MEAN?</div>
+          <div class="qz-qword" id="qz-qword">—</div>
+          <div class="qz-qsub" id="qz-qsub"></div>
+        </div>
+        <div class="qz-options" id="qz-opts"></div>
+        <div class="qz-feedback" id="qz-feedback"></div>
+        <button class="qz-next" id="qz-next" onclick="nextQuestion()">NEXT →</button>
+      </div>
+      <div class="qz-result" id="qz-result">
+        <div style="font-size:2rem">🎉</div>
+        <div style="font-size:1.1rem;font-weight:700;color:var(--bright);margin-top:8px">Quiz Complete!</div>
+        <div class="qz-result-score" id="qz-final-score">—</div>
+        <div class="qz-result-lbl" id="qz-result-lbl">—</div>
+        <button class="qz-restart" onclick="startQuiz()">Play Again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STARRED EMPTY -->
+  <div id="starred-empty">
+    ⭐ No starred words yet.<br>
+    <span style="font-size:13px">Click the ☆ on any card to bookmark words.</span>
+  </div>
+
+</div><!-- /wrap -->
+
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ─── WORD DETAIL MODAL ─── -->
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal">
+    <button id="modal-close" onclick="closeModalDirect()">✕</button>
+    <div class="modal-num" id="m-num">#001</div>
+    <div class="modal-word" id="m-word">Word</div>
+    <div class="modal-en" id="m-en">English meaning here</div>
+    <div class="modal-bn-label">বাংলা অর্থ</div>
+    <div class="modal-bn" id="m-bn">বাংলা</div>
+    <div class="modal-ex-label">Example</div>
+    <div class="modal-ex" id="m-ex">Example sentence.</div>
+    <div class="modal-actions">
+      <button class="modal-nav-btn" onclick="modalNav(-1)">← Prev</button>
+      <button class="modal-star" id="m-star" onclick="toggleModalStar()">☆ Star</button>
+      <button class="modal-nav-btn" onclick="modalNav(1)">Next →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════
+   DATA — 299 Barron's SAT Words
+════════════════════════════════════════════ */
+const EN = {
+  "Abate":"to reduce in force, degree, or intensity",
+  "Aberration":"a departure from what is normal or expected",
+  "Abhor":"to regard with disgust and hatred",
+  "Abject":"utterly hopeless; of the most degraded kind",
+  "Abolish":"to formally put an end to a system or practice",
+  "Abreast":"side by side; up to date with",
+  "Abrupt":"sudden and unexpected; curt",
+  "Abscond":"to leave hurriedly and secretly to escape from custody",
+  "Abstemious":"not self-indulgent; moderate in eating and drinking",
+  "Abstract":"existing in thought; not concrete; theoretical",
+  "Abysmal":"extremely bad; very deep or bottomless",
+  "Accolade":"an award given as a special honor or recognition",
+  "Acerbic":"sharp and direct; bitter or harsh in tone",
+  "Acquiesce":"accept something reluctantly without protest",
+  "Adamant":"refusing to be persuaded; inflexible",
+  "Adept":"very skilled or proficient at something",
+  "Adhere":"to stick firmly; follow closely",
+  "Admonish":"to warn or reprimand someone firmly",
+  "Adroit":"clever or skillful in using the hands or mind",
+  "Affable":"friendly, good-natured, easy to talk to",
+  "Affluent":"having a great deal of money; wealthy",
+  "Aggrandize":"to increase power, status, or wealth of",
+  "Alacrity":"brisk and cheerful readiness",
+  "Alleviate":"to make suffering, deficiency, or a problem less severe",
+  "Aloof":"not friendly or forthcoming; distant and remote",
+  "Ambiguous":"open to more than one interpretation; unclear",
+  "Ambivalent":"having mixed feelings or contradictory ideas about something",
+  "Ameliorate":"to make something bad or unsatisfactory better",
+  "Amiable":"having a friendly and pleasant manner",
+  "Amorphous":"without a clearly defined shape or form",
+  "Anachronism":"a thing belonging to another period than the one depicted",
+  "Analogous":"comparable in certain respects; similar in function",
+  "Animosity":"strong hostility; intense dislike or hatred",
+  "Antagonize":"to cause someone to become hostile",
+  "Apathy":"lack of interest, enthusiasm, or concern",
+  "Apocryphal":"of doubtful authenticity; widely circulated but probably false",
+  "Apprehensive":"anxious or fearful that something bad will happen",
+  "Arduous":"involving great effort; difficult and tiring",
+  "Arrogant":"having an exaggerated sense of one's own importance",
+  "Articulate":"having or showing the ability to speak fluently",
+  "Ascertain":"to find out for certain; determine",
+  "Ascetic":"characterized by severe self-discipline; austere",
+  "Assiduous":"showing great care and perseverance",
+  "Astute":"having ability to accurately assess situations; shrewd",
+  "Audacious":"showing willingness to take surprisingly bold risks",
+  "Austere":"severe or strict in manner; without luxury",
+  "Avarice":"extreme greed for wealth or material gain",
+  "Axiom":"a statement or proposition taken as self-evidently true",
+  "Banal":"so lacking in originality as to be obvious and boring",
+  "Belie":"to fail to give a true impression of something",
+  "Benevolent":"well-meaning and kindly; charitable",
+  "Benign":"gentle and kindly; not harmful in effect",
+  "Bolster":"to support or strengthen; to prop up",
+  "Boorish":"rough and bad-mannered; coarse",
+  "Brevity":"concise and exact use of words; shortness of time",
+  "Cacophony":"a harsh, discordant mixture of sounds",
+  "Candid":"truthful and straightforward; frank",
+  "Capricious":"given to sudden unpredictable changes; whimsical",
+  "Caustic":"sarcastic in a scathing way; able to burn or corrode",
+  "Censure":"to express severe disapproval of; to criticize harshly",
+  "Chicanery":"the use of trickery to achieve a purpose",
+  "Circumspect":"wary and unwilling to take risks; careful",
+  "Coerce":"to persuade an unwilling person to do something by force",
+  "Cogent":"clear, logical, and convincing",
+  "Colloquial":"used in ordinary or familiar conversation; informal",
+  "Complacent":"showing smug or uncritical satisfaction with oneself",
+  "Concur":"to be of the same opinion; to agree",
+  "Condone":"to accept and allow to continue; overlook",
+  "Conspicuous":"standing out so as to be clearly visible; noticeable",
+  "Contentious":"causing or likely to cause argument; controversial",
+  "Copious":"abundant in supply or quantity; plentiful",
+  "Credible":"able to be believed; convincing",
+  "Cursory":"hasty and therefore not thorough; superficial",
+  "Debacle":"a sudden disastrous collapse or defeat; a fiasco",
+  "Deference":"humble submission and respect; regard",
+  "Deliberate":"done consciously and intentionally; slow and careful",
+  "Demure":"reserved, modest, and shy",
+  "Denigrate":"to criticize unfairly; to disparage",
+  "Deride":"to express contempt for; to ridicule",
+  "Despot":"a ruler or person who holds power in a cruel way",
+  "Diligent":"having or showing care and conscientiousness in work",
+  "Discern":"to recognize or find out; to perceive",
+  "Discreet":"careful and prudent in speech; not drawing attention",
+  "Disparage":"to regard or represent as being of little worth",
+  "Disseminate":"to spread something widely",
+  "Dogmatic":"inclined to lay down principles as incontrovertibly true",
+  "Dubious":"hesitating or doubting; not to be relied upon",
+  "Eccentric":"unconventional and slightly strange",
+  "Egregious":"outstandingly bad; shocking",
+  "Elated":"very happy or proud; jubilant",
+  "Eloquent":"fluent or persuasive in speaking or writing",
+  "Elusive":"difficult to find, catch, or achieve",
+  "Empirical":"based on observation or experience rather than theory",
+  "Endorse":"to declare one's public approval of; to support",
+  "Enervate":"to make someone feel drained of energy; to weaken",
+  "Engender":"to cause or give rise to a feeling or situation",
+  "Enigmatic":"difficult to interpret or understand; mysterious",
+  "Ephemeral":"lasting for a very short time; transitory",
+  "Equanimity":"mental calmness and composure in difficult situations",
+  "Erratic":"not even or regular in pattern; unpredictable",
+  "Esoteric":"intended for only a small group with specialized knowledge",
+  "Exacerbate":"to make a problem, bad situation, or negative feeling worse",
+  "Exonerate":"to officially absolve from blame or criminal charges",
+  "Expedite":"to make an action or process happen more quickly",
+  "Explicit":"stated clearly and in detail; leaving no room for confusion",
+  "Extol":"to praise enthusiastically",
+  "Fallacious":"based on a mistaken belief; logically unsound",
+  "Feasible":"possible to do easily or conveniently; practicable",
+  "Fervent":"having or displaying a passionate intensity",
+  "Flagrant":"conspicuously or obviously offensive; blatant",
+  "Frugal":"sparing or economical as regards money or food",
+  "Garrulous":"excessively talkative, especially on trivial matters",
+  "Gregarious":"fond of company; sociable",
+  "Hackneyed":"having been overused; lacking significance through familiarity",
+  "Haughty":"arrogantly superior and disdainful",
+  "Hedonist":"a person who believes that pleasure is the highest good",
+  "Hypocritical":"behaving in a way that contradicts stated beliefs",
+  "Imminent":"about to happen; impending",
+  "Impartial":"treating all rivals or disputants equally; fair",
+  "Impetuous":"acting or done quickly without thought; impulsive",
+  "Inadvertent":"not resulting from deliberate intention; accidental",
+  "Incisive":"intelligently analytical and clear-thinking; sharp",
+  "Indignant":"feeling or showing anger at what is perceived as unfair",
+  "Indolent":"wanting to avoid activity; lazy",
+  "Inept":"having or showing no skill; incompetent",
+  "Infamy":"the state of being well known for some bad quality",
+  "Inhibit":"to hinder, restrain, or prevent an action",
+  "Innate":"inborn; natural; not acquired",
+  "Insipid":"lacking vigor or interest; tasteless",
+  "Intrepid":"fearless and adventurous; courageous",
+  "Irreverent":"showing a lack of respect for sacred things",
+  "Judicious":"having or showing good judgment; sensible",
+  "Keen":"having a sharp edge; enthusiastic; intelligent",
+  "Lament":"to express passionate grief or sorrow about",
+  "Lethargic":"affected by lethargy; sluggish and apathetic",
+  "Lucid":"expressed clearly; easy to understand",
+  "Magnanimous":"very generous or forgiving; noble in spirit",
+  "Malevolent":"having or showing a wish to do evil to others",
+  "Meticulous":"showing great attention to detail; very careful",
+  "Mundane":"lacking interest or excitement; dull and ordinary",
+  "Naive":"showing a lack of experience, wisdom, or judgment",
+  "Nebulous":"in the form of a cloud; vague; unclear",
+  "Nonchalant":"feeling or appearing casually calm and relaxed",
+  "Obdurate":"stubbornly refusing to change one's opinion; hardened",
+  "Obsolete":"no longer produced or used; out of date",
+  "Ostentatious":"characterized by vulgar or pretentious display; showy",
+  "Paradox":"a statement that contradicts itself but may be true",
+  "Parsimonious":"unwilling to spend money or use resources; stingy",
+  "Perilous":"full of danger or risk",
+  "Pragmatic":"dealing with things sensibly and realistically",
+  "Precarious":"not securely held; uncertain; dependent on chance",
+  "Prevalent":"widespread in a particular area at a particular time",
+  "Prodigal":"spending money or resources freely; wasteful",
+  "Prolific":"producing much fruit, foliage, or offspring; highly productive",
+  "Prosaic":"having the style of prose; unimaginative; dull",
+  "Provocative":"causing anger or a strong reaction; stimulating",
+  "Prudent":"acting with careful thought for the future; wise",
+  "Pugnacious":"eager or quick to argue, quarrel, or fight",
+  "Quell":"to put an end to rebellion; to suppress",
+  "Querulous":"complaining in a petulant way",
+  "Quintessential":"representing the most perfect or typical example",
+  "Recalcitrant":"having an obstinately uncooperative attitude",
+  "Reclusive":"avoiding the company of other people; solitary",
+  "Redundant":"not or no longer needed; superfluous",
+  "Relegate":"to consign to an inferior rank or position",
+  "Reluctant":"unwilling and hesitant; disinclined",
+  "Remedial":"giving or intended as a remedy or cure",
+  "Repudiate":"to refuse to accept or be associated with",
+  "Resilient":"able to withstand or recover quickly from difficulties",
+  "Resolute":"admirably purposeful, determined, and unwavering",
+  "Reticent":"not revealing one's thoughts or feelings readily",
+  "Reverent":"feeling or showing deep and solemn respect",
+  "Rhetorical":"relating to or concerned with the art of rhetoric",
+  "Rigorous":"extremely thorough and careful; demanding",
+  "Robust":"strong and healthy; vigorous",
+  "Rudimentary":"involving or limited to basic principles; elementary",
+  "Sagacious":"having or showing keen mental discernment; wise",
+  "Salient":"most noticeable or important; prominent",
+  "Sanction":"to give official permission or approval; a penalty",
+  "Scrupulous":"diligent, thorough, and extremely attentive to detail",
+  "Serene":"calm, peaceful, and untroubled",
+  "Shrewd":"having sharp powers of judgment; astute",
+  "Skeptical":"not easily convinced; having doubts",
+  "Spurious":"not genuine, authentic, or true; false",
+  "Stagnant":"having no current or flow; showing no activity",
+  "Stoic":"enduring pain and hardship without showing feeling",
+  "Subtle":"so delicate or precise as to be difficult to analyze",
+  "Superfluous":"unnecessary, especially through being more than enough",
+  "Suppress":"to forcibly put an end to; to prevent from being known",
+  "Tenacious":"tending to keep a firm hold; persistent",
+  "Timorous":"showing or suffering from nervousness or fear",
+  "Tranquil":"free from disturbance; calm and peaceful",
+  "Transient":"lasting only for a short time; temporary",
+  "Ubiquitous":"present, appearing, or found everywhere",
+  "Unanimous":"fully in agreement; held by all parties",
+  "Unprecedented":"never done or known before",
+  "Vacillate":"to waver between different opinions or actions; be indecisive",
+  "Venerate":"to regard with great respect; to revere",
+  "Veracity":"conformity to facts; accuracy; truthfulness",
+  "Versatile":"able to adapt to many different functions or activities",
+  "Vicarious":"experienced in the imagination through another person",
+  "Vigilant":"keeping careful watch for possible danger",
+  "Vindicate":"to clear of blame or suspicion; to justify",
+  "Virtuoso":"a person highly skilled in music or another artistic pursuit",
+  "Wary":"feeling or showing caution about possible dangers",
+  "Whimsical":"playfully quaint or fanciful; acting or behaving capriciously",
+  "Zealous":"having or showing zeal; fervent",
+  "Aberrant":"departing from an accepted standard; deviant",
+  "Aesthetic":"concerned with beauty or the appreciation of beauty",
+  "Altruistic":"showing a disinterested and selfless concern for others",
+  "Antipathy":"a deep-seated feeling of dislike; aversion",
+  "Astringent":"causing the contraction of body tissues; severe or harsh",
+  "Belligerent":"hostile and aggressive; engaged in a war",
+  "Blatant":"done openly and unashamedly; completely obvious",
+  "Clandestine":"kept secret, especially for illicit reasons",
+  "Coherent":"logical and consistent; easy to understand",
+  "Compelling":"evoking interest, attention, or admiration in a powerful way",
+  "Convoluted":"extremely complex and difficult to follow",
+  "Defiant":"showing defiance; boldly resistant",
+  "Devious":"showing a skillful use of underhanded tactics",
+  "Didactic":"intended to teach, particularly having moral instruction",
+  "Disdain":"the feeling that something is unworthy; contempt",
+  "Exorbitant":"unreasonably high in price or amount",
+  "Fastidious":"very attentive to accuracy and detail; fussy",
+  "Futile":"incapable of producing any useful result; pointless",
+  "Hinder":"to create difficulties for; to obstruct",
+  "Illicit":"forbidden by law, rules, or custom",
+  "Impeccable":"in accordance with the highest standards; faultless",
+  "Implicit":"suggested though not directly expressed; unquestioning",
+  "Incessant":"never stopping; continuing without interruption",
+  "Laud":"to praise highly",
+  "Morose":"sullen and ill-tempered; gloomy",
+  "Novice":"a person new to or inexperienced in a field",
+  "Ominous":"giving the impression that something bad is going to happen",
+  "Ostensible":"stated or appearing to be true, but not necessarily so",
+  "Perfunctory":"carried out with minimum effort; superficial",
+  "Plausible":"seeming reasonable or probable; credible",
+  "Preempt":"to take action in order to prevent an anticipated event",
+  "Pretentious":"attempting to impress by affecting greater importance",
+  "Reconcile":"to restore friendly relations between; to make compatible",
+  "Relentless":"unceasingly intense; harsh or inflexible",
+  "Scathing":"witheringly scornful; severely critical",
+  "Sporadic":"occurring at irregular intervals; scattered",
+  "Stern":"serious and unrelenting; not gentle",
+  "Terse":"sparing in the use of words; brief",
+  "Unwarranted":"not justified or authorized; uncalled for",
+  "Viable":"capable of working successfully; feasible",
+  "Wistful":"having or showing a feeling of vague longing",
+  "Abstruse":"difficult to understand; obscure",
+  "Acumen":"the ability to make good judgments; keenness",
+  "Adequate":"satisfactory or acceptable in quality or quantity",
+  "Adverse":"preventing success or development; harmful",
+  "Affinity":"a natural liking for and understanding of someone or something",
+  "Agitate":"to make someone troubled or nervous; to stir up",
+  "Allay":"to diminish or put at rest (fear, suspicion, worry)",
+  "Amicable":"having a spirit of friendliness; without serious disagreement",
+  "Anomaly":"something that deviates from what is standard or expected",
+  "Antithesis":"a person or thing that is the direct opposite of another",
+  "Arbitrary":"based on random choice; unrestrained",
+  "Arcane":"known or understood only by a few; mysterious",
+  "Avert":"to turn away from; to prevent something from happening",
+  "Bewilder":"to cause someone to become perplexed and confused",
+  "Coalesce":"to come together to form one mass or whole",
+  "Conform":"to comply with rules, standards, or laws",
+  "Constrain":"to severely restrict or limit; to force",
+  "Converge":"to tend to meet at a point; to come together",
+  "Corroborate":"to confirm or give support to a statement",
+  "Detrimental":"tending to cause harm; injurious",
+  "Diffuse":"spread over a wide area or among many people",
+  "Discrepancy":"a lack of compatibility or similarity between facts",
+  "Elucidate":"to make clear; to explain",
+  "Emulate":"to try to match or surpass by imitation; to follow",
+  "Encompass":"to surround and have or hold within; to include",
+  "Execrable":"extremely bad or unpleasant",
+  "Extrapolate":"to extend the application of a method to an unknown situation",
+  "Fathom":"to understand after much thought",
+  "Fortuitous":"happening by accident or chance; fortunate",
+  "Harangue":"a lengthy and aggressive speech",
+  "Impeach":"to charge a public official with misconduct",
+  "Implore":"to beg someone earnestly to do something",
+  "Incumbent":"necessary as a duty; currently holding an office",
+  "Induce":"to bring about or give rise to; to persuade",
+  "Inundate":"to overwhelm with things to be dealt with; to flood",
+  "Invalidate":"to make an argument, statement, or theory unsound",
+  "Latent":"existing but not yet developed or manifest; hidden",
+  "Lucrative":"producing a great deal of profit; profitable",
+  "Mitigate":"to make less severe, serious, or painful",
+  "Myriad":"a countless or extremely great number",
+  "Obscure":"not discovered or known about; uncertain; unclear",
+  "Palpable":"so intense as to seem almost tangible; noticeable",
+  "Pensive":"engaged in deep thought, especially sadly",
+  "Placate":"to make someone less angry; to appease",
+  "Proclivity":"a tendency to choose a particular thing; inclination",
+  "Prohibit":"to formally forbid something by law or authority"
+};
+
+const WORDS = [{"sl":1,"word":"Abate","bn":"কমে যাওয়া","ex":"The storm finally abated at night."},{"sl":2,"word":"Aberration","bn":"বিচ্যুতিকরণ হওয়া","ex":"His behavior was an aberration from the norm."},{"sl":3,"word":"Abhor","bn":"ঘৃণা করা","ex":"She abhors cruelty to animals."},{"sl":4,"word":"Abject","bn":"চরম দুর্দশাগ্রস্ত","ex":"They lived in abject poverty."},{"sl":5,"word":"Abolish","bn":"বিলুপ্ত করা","ex":"The law was abolished last year."},{"sl":6,"word":"Abreast","bn":"পাশাপাশি","ex":"Keep me abreast of the situation."},{"sl":7,"word":"Abrupt","bn":"হঠাৎ","ex":"His abrupt reply shocked everyone."},{"sl":8,"word":"Abscond","bn":"পালিয়ে যাওয়া","ex":"The thief absconded before police arrived."},{"sl":9,"word":"Abstemious","bn":"সংযমী","ex":"He is abstemious in his eating habits."},{"sl":10,"word":"Abstract","bn":"বিমূর্ত","ex":"Love is an abstract idea."},{"sl":11,"word":"Abysmal","bn":"অতল/ভয়াবহ","ex":"The results were abysmal."},{"sl":12,"word":"Accolade","bn":"প্রশংসা","ex":"She received accolades for her work."},{"sl":13,"word":"Acerbic","bn":"তীক্ষ্ণ","ex":"His acerbic remarks hurt people."},{"sl":14,"word":"Acquiesce","bn":"মেনে নেওয়া","ex":"He acquiesced to their demands."},{"sl":15,"word":"Adamant","bn":"অনড়","ex":"She was adamant about her decision."},{"sl":16,"word":"Adept","bn":"দক্ষ","ex":"He is adept at problem solving."},{"sl":17,"word":"Adhere","bn":"মেনে চলা","ex":"Follow and adhere to the rules."},{"sl":18,"word":"Admonish","bn":"তিরস্কার করা","ex":"The teacher admonished the student."},{"sl":19,"word":"Adroit","bn":"নিপুণ","ex":"She gave an adroit answer."},{"sl":20,"word":"Affable","bn":"সদালাপী","ex":"He has an affable personality."},{"sl":21,"word":"Affluent","bn":"ধনী","ex":"They live in an affluent area."},{"sl":22,"word":"Aggrandize","bn":"অতিরঞ্জিত করা","ex":"He aggrandized his achievements."},{"sl":23,"word":"Alacrity","bn":"দ্রুত আগ্রহ","ex":"She accepted the offer with alacrity."},{"sl":24,"word":"Alleviate","bn":"লাঘব করা","ex":"Medicine alleviated his pain."},{"sl":25,"word":"Aloof","bn":"দূরত্ব বজায় রাখা","ex":"He remained aloof from the crowd."},{"sl":26,"word":"Ambiguous","bn":"অস্পষ্ট","ex":"His statement was ambiguous."},{"sl":27,"word":"Ambivalent","bn":"দ্বিধাগ্রস্ত","ex":"She felt ambivalent about the job."},{"sl":28,"word":"Ameliorate","bn":"উন্নত করা","ex":"Steps were taken to ameliorate conditions."},{"sl":29,"word":"Amiable","bn":"বন্ধুসুলভ","ex":"He is an amiable colleague."},{"sl":30,"word":"Amorphous","bn":"নির্দিষ্ট আকৃতিহীন","ex":"The plan was amorphous."},{"sl":31,"word":"Anachronism","bn":"যুগবিরোধী","ex":"That custom is an anachronism."},{"sl":32,"word":"Analogous","bn":"সাদৃশ্যপূর্ণ","ex":"The two cases are analogous."},{"sl":33,"word":"Animosity","bn":"শত্রুতা","ex":"There was animosity between them."},{"sl":34,"word":"Antagonize","bn":"বিরোধ সৃষ্টি করা","ex":"His words antagonized the group."},{"sl":35,"word":"Apathy","bn":"উদাসীনতা","ex":"Voters showed apathy."},{"sl":36,"word":"Apocryphal","bn":"সন্দেহজনক","ex":"The story is apocryphal."},{"sl":37,"word":"Apprehensive","bn":"উদ্বিগ্ন","ex":"She was apprehensive about exams."},{"sl":38,"word":"Arduous","bn":"কষ্টসাধ্য","ex":"The journey was arduous."},{"sl":39,"word":"Arrogant","bn":"অহংকারী","ex":"He sounded arrogant."},{"sl":40,"word":"Articulate","bn":"স্পষ্টভাষী","ex":"She is very articulate."},{"sl":41,"word":"Ascertain","bn":"নিশ্চিত হওয়া","ex":"Please ascertain the facts."},{"sl":42,"word":"Ascetic","bn":"কঠোর সংযমী","ex":"He led an ascetic life."},{"sl":43,"word":"Assiduous","bn":"পরিশ্রমী","ex":"She is assiduous in her studies."},{"sl":44,"word":"Astute","bn":"তীক্ষ্ণবুদ্ধি","ex":"He made an astute observation."},{"sl":45,"word":"Audacious","bn":"দুঃসাহসী","ex":"It was an audacious plan."},{"sl":46,"word":"Austere","bn":"কঠোর","ex":"The rules are austere."},{"sl":47,"word":"Avarice","bn":"লোভ","ex":"Avarice ruined him."},{"sl":48,"word":"Axiom","bn":"স্বতঃসিদ্ধ সত্য","ex":"It is an accepted axiom."},{"sl":49,"word":"Banal","bn":"গতানুগতিক","ex":"His speech was banal."},{"sl":50,"word":"Belie","bn":"মিথ্যা প্রমাণ করা","ex":"Her smile belied her sadness."},{"sl":51,"word":"Benevolent","bn":"দয়ালু","ex":"A benevolent donor helped the poor."},{"sl":52,"word":"Benign","bn":"নিরীহ","ex":"It was a benign tumor."},{"sl":53,"word":"Bolster","bn":"শক্তিশালী করা","ex":"The speech bolstered public support."},{"sl":54,"word":"Boorish","bn":"অভদ্র","ex":"His boorish behavior offended guests."},{"sl":55,"word":"Brevity","bn":"সংক্ষিপ্ততা","ex":"Brevity makes writing powerful."},{"sl":56,"word":"Cacophony","bn":"কর্কশ শব্দ","ex":"A cacophony filled the street."},{"sl":57,"word":"Candid","bn":"স্পষ্টভাষী","ex":"She gave a candid opinion."},{"sl":58,"word":"Capricious","bn":"খামখেয়ালি","ex":"He has a capricious nature."},{"sl":59,"word":"Caustic","bn":"বিদ্রূপপূর্ণ","ex":"His caustic remarks hurt others."},{"sl":60,"word":"Censure","bn":"তিরস্কার করা","ex":"The minister was censured."},{"sl":61,"word":"Chicanery","bn":"প্রতারণা","ex":"He won through chicanery."},{"sl":62,"word":"Circumspect","bn":"সতর্ক","ex":"Be circumspect in decisions."},{"sl":63,"word":"Coerce","bn":"জোর করা","ex":"They coerced him to sign."},{"sl":64,"word":"Cogent","bn":"জোরালো","ex":"She made a cogent argument."},{"sl":65,"word":"Colloquial","bn":"কথ্য","ex":"Avoid colloquial language in exams."},{"sl":66,"word":"Complacent","bn":"আত্মতুষ্ট","ex":"Success made him complacent."},{"sl":67,"word":"Concur","bn":"একমত হওয়া","ex":"I concur with your view."},{"sl":68,"word":"Condone","bn":"সমর্থন করা","ex":"I don't condone violence."},{"sl":69,"word":"Conspicuous","bn":"চোখে পড়ার মতো","ex":"He wore a conspicuous jacket."},{"sl":70,"word":"Contentious","bn":"বিতর্কিত","ex":"It's a contentious issue."},{"sl":71,"word":"Copious","bn":"প্রচুর","ex":"She took copious notes."},{"sl":72,"word":"Credible","bn":"বিশ্বাসযোগ্য","ex":"The source is credible."},{"sl":73,"word":"Cursory","bn":"উপর উপর","ex":"He gave a cursory glance."},{"sl":74,"word":"Debacle","bn":"ভরাডুবি","ex":"The project was a debacle."},{"sl":75,"word":"Deference","bn":"শ্রদ্ধা","ex":"Show deference to elders."},{"sl":76,"word":"Deliberate","bn":"ইচ্ছাকৃত","ex":"It was a deliberate act."},{"sl":77,"word":"Demure","bn":"লাজুক","ex":"She remained demure."},{"sl":78,"word":"Denigrate","bn":"হেয় করা","ex":"He denigrated his rival."},{"sl":79,"word":"Deride","bn":"উপহাস করা","ex":"They derided the idea."},{"sl":80,"word":"Despot","bn":"স্বৈরশাসক","ex":"The country feared the despot."},{"sl":81,"word":"Diligent","bn":"অধ্যবসায়ী","ex":"She is diligent in studies."},{"sl":82,"word":"Discern","bn":"বুঝে নেওয়া","ex":"I discerned his intention."},{"sl":83,"word":"Discreet","bn":"বিচক্ষণ","ex":"Be discreet with secrets."},{"sl":84,"word":"Disparage","bn":"অবমূল্যায়ন করা","ex":"Don't disparage others."},{"sl":85,"word":"Disseminate","bn":"ছড়িয়ে দেওয়া","ex":"News spread rapidly."},{"sl":86,"word":"Dogmatic","bn":"গোঁড়া","ex":"He is dogmatic in beliefs."},{"sl":87,"word":"Dubious","bn":"সন্দেহজনক","ex":"The plan seems dubious."},{"sl":88,"word":"Eccentric","bn":"অদ্ভুত","ex":"He has eccentric habits."},{"sl":89,"word":"Egregious","bn":"গুরুতর","ex":"It was an egregious error."},{"sl":90,"word":"Elated","bn":"আনন্দিত","ex":"She felt elated."},{"sl":91,"word":"Eloquent","bn":"বাগ্মী","ex":"He gave an eloquent speech."},{"sl":92,"word":"Elusive","bn":"ধরা কঠিন","ex":"Success is elusive."},{"sl":93,"word":"Empirical","bn":"পরীক্ষালব্ধ","ex":"The study is empirical."},{"sl":94,"word":"Endorse","bn":"সমর্থন করা","ex":"The policy was endorsed."},{"sl":95,"word":"Enervate","bn":"দুর্বল করা","ex":"Heat enervates the body."},{"sl":96,"word":"Engender","bn":"সৃষ্টি করা","ex":"Fear engendered panic."},{"sl":97,"word":"Enigmatic","bn":"রহস্যময়","ex":"He gave an enigmatic smile."},{"sl":98,"word":"Ephemeral","bn":"ক্ষণস্থায়ী","ex":"Fame is ephemeral."},{"sl":99,"word":"Equanimity","bn":"মানসিক স্থিরতা","ex":"He faced loss with equanimity."},{"sl":100,"word":"Erratic","bn":"অনিয়মিত","ex":"His behavior was erratic."},{"sl":101,"word":"Esoteric","bn":"দুর্বোধ্য","ex":"The text is esoteric."},{"sl":102,"word":"Exacerbate","bn":"আরও খারাপ করা","ex":"Delay exacerbated problems."},{"sl":103,"word":"Exonerate","bn":"নির্দোষ প্রমাণ করা","ex":"Evidence exonerated him."},{"sl":104,"word":"Expedite","bn":"দ্রুত করা","ex":"Please expedite the process."},{"sl":105,"word":"Explicit","bn":"স্পষ্ট","ex":"Give explicit instructions."},{"sl":106,"word":"Extol","bn":"প্রশংসা করা","ex":"Critics extolled the film."},{"sl":107,"word":"Fallacious","bn":"ভ্রান্ত","ex":"His logic was fallacious."},{"sl":108,"word":"Feasible","bn":"সম্ভব","ex":"The plan is feasible."},{"sl":109,"word":"Fervent","bn":"উৎসাহী","ex":"He is a fervent supporter."},{"sl":110,"word":"Flagrant","bn":"চরম","ex":"A flagrant violation occurred."},{"sl":111,"word":"Frugal","bn":"মিতব্যয়ী","ex":"He lives a frugal life."},{"sl":112,"word":"Garrulous","bn":"বাচাল","ex":"He is too garrulous."},{"sl":113,"word":"Gregarious","bn":"মিশুক","ex":"She is gregarious."},{"sl":114,"word":"Hackneyed","bn":"গতানুগতিক","ex":"A hackneyed phrase."},{"sl":115,"word":"Haughty","bn":"উদ্ধত","ex":"Her tone was haughty."},{"sl":116,"word":"Hedonist","bn":"ভোগবাদী","ex":"A hedonist seeks pleasure."},{"sl":117,"word":"Hypocritical","bn":"ভণ্ড","ex":"His apology sounded hypocritical."},{"sl":118,"word":"Imminent","bn":"আসন্ন","ex":"Danger is imminent."},{"sl":119,"word":"Impartial","bn":"নিরপেক্ষ","ex":"Judges must be impartial."},{"sl":120,"word":"Impetuous","bn":"অবিবেচক","ex":"An impetuous decision."},{"sl":121,"word":"Inadvertent","bn":"অনিচ্ছাকৃত","ex":"It was inadvertent."},{"sl":122,"word":"Incisive","bn":"তীক্ষ্ণ","ex":"An incisive comment."},{"sl":123,"word":"Indignant","bn":"ক্ষুব্ধ","ex":"She felt indignant."},{"sl":124,"word":"Indolent","bn":"অলস","ex":"An indolent student."},{"sl":125,"word":"Inept","bn":"অদক্ষ","ex":"He is inept at math."},{"sl":126,"word":"Infamy","bn":"কুখ্যাতি","ex":"He gained infamy."},{"sl":127,"word":"Inhibit","bn":"বাধা দেওয়া","ex":"Fear inhibits growth."},{"sl":128,"word":"Innate","bn":"জন্মগত","ex":"Talent is innate."},{"sl":129,"word":"Insipid","bn":"নিরস","ex":"The food was insipid."},{"sl":130,"word":"Intrepid","bn":"সাহসী","ex":"An intrepid explorer."},{"sl":131,"word":"Irreverent","bn":"অসম্মানজনক","ex":"His tone was irreverent."},{"sl":132,"word":"Judicious","bn":"বিচক্ষণ","ex":"A judicious choice."},{"sl":133,"word":"Keen","bn":"তীক্ষ্ণ","ex":"He has keen insight."},{"sl":134,"word":"Lament","bn":"দুঃখ প্রকাশ করা","ex":"She lamented the loss."},{"sl":135,"word":"Lethargic","bn":"অলস","ex":"He felt lethargic."},{"sl":136,"word":"Lucid","bn":"স্পষ্ট","ex":"A lucid explanation."},{"sl":137,"word":"Magnanimous","bn":"উদার","ex":"A magnanimous leader."},{"sl":138,"word":"Malevolent","bn":"কুদৃষ্টিসম্পন্ন","ex":"A malevolent intent."},{"sl":139,"word":"Meticulous","bn":"খুঁটিনাটি সচেতন","ex":"He is meticulous."},{"sl":140,"word":"Mundane","bn":"একঘেয়ে","ex":"Mundane routine."},{"sl":141,"word":"Naive","bn":"সরল","ex":"A naive child."},{"sl":142,"word":"Nebulous","bn":"অস্পষ্ট","ex":"A nebulous plan."},{"sl":143,"word":"Nonchalant","bn":"উদাসীন","ex":"He seemed nonchalant."},{"sl":144,"word":"Obdurate","bn":"অনমনীয়","ex":"An obdurate attitude."},{"sl":145,"word":"Obsolete","bn":"অপ্রচলিত","ex":"Obsolete technology."},{"sl":146,"word":"Ostentatious","bn":"জাঁকজমকপূর্ণ","ex":"Ostentatious display."},{"sl":147,"word":"Paradox","bn":"বৈপরীত্য","ex":"A strange paradox."},{"sl":148,"word":"Parsimonious","bn":"কৃপণ","ex":"A parsimonious man."},{"sl":149,"word":"Perilous","bn":"বিপজ্জনক","ex":"A perilous journey."},{"sl":150,"word":"Pragmatic","bn":"বাস্তববাদী","ex":"A pragmatic approach."},{"sl":151,"word":"Precarious","bn":"অনিশ্চিত","ex":"He was in a precarious situation."},{"sl":152,"word":"Prevalent","bn":"ব্যাপক","ex":"This disease is prevalent here."},{"sl":153,"word":"Prodigal","bn":"অপচয়ী","ex":"The prodigal son returned home."},{"sl":154,"word":"Prolific","bn":"উর্বর/প্রচুর","ex":"He is a prolific writer."},{"sl":155,"word":"Prosaic","bn":"নীরস","ex":"His style is prosaic."},{"sl":156,"word":"Provocative","bn":"উসকানিমূলক","ex":"A provocative comment."},{"sl":157,"word":"Prudent","bn":"বিচক্ষণ","ex":"A prudent decision."},{"sl":158,"word":"Pugnacious","bn":"ঝগড়াটে","ex":"He has a pugnacious nature."},{"sl":159,"word":"Quell","bn":"দমন করা","ex":"Police quelled the riot."},{"sl":160,"word":"Querulous","bn":"অভিযোগপ্রবণ","ex":"A querulous tone."},{"sl":161,"word":"Quintessential","bn":"আদর্শ উদাহরণ","ex":"He is the quintessential leader."},{"sl":162,"word":"Recalcitrant","bn":"অবাধ্য","ex":"A recalcitrant child."},{"sl":163,"word":"Reclusive","bn":"নিঃসঙ্গপ্রবণ","ex":"He lives a reclusive life."},{"sl":164,"word":"Redundant","bn":"অপ্রয়োজনীয়","ex":"Remove redundant words."},{"sl":165,"word":"Relegate","bn":"নিচে নামানো","ex":"He was relegated to a minor role."},{"sl":166,"word":"Reluctant","bn":"অনিচ্ছুক","ex":"She was reluctant to agree."},{"sl":167,"word":"Remedial","bn":"প্রতিকারমূলক","ex":"Remedial measures were taken."},{"sl":168,"word":"Repudiate","bn":"অস্বীকার করা","ex":"He repudiated the accusation."},{"sl":169,"word":"Resilient","bn":"সহনশীল","ex":"Children are resilient."},{"sl":170,"word":"Resolute","bn":"দৃঢ়সংকল্প","ex":"She remained resolute."},{"sl":171,"word":"Reticent","bn":"চুপচাপ","ex":"He is reticent about his past."},{"sl":172,"word":"Reverent","bn":"শ্রদ্ধাশীল","ex":"A reverent silence."},{"sl":173,"word":"Rhetorical","bn":"অলঙ্কারমূলক","ex":"A rhetorical question."},{"sl":174,"word":"Rigorous","bn":"কঠোর","ex":"A rigorous exam."},{"sl":175,"word":"Robust","bn":"শক্তিশালী","ex":"A robust economy."},{"sl":176,"word":"Rudimentary","bn":"প্রাথমিক","ex":"Rudimentary knowledge."},{"sl":177,"word":"Sagacious","bn":"দূরদর্শী","ex":"A sagacious leader."},{"sl":178,"word":"Salient","bn":"গুরুত্বপূর্ণ","ex":"The salient features."},{"sl":179,"word":"Sanction","bn":"অনুমোদন","ex":"The plan got sanction."},{"sl":180,"word":"Scrupulous","bn":"নীতিনিষ্ঠ","ex":"A scrupulous officer."},{"sl":181,"word":"Serene","bn":"শান্ত","ex":"A serene environment."},{"sl":182,"word":"Shrewd","bn":"চতুর","ex":"A shrewd businessman."},{"sl":183,"word":"Skeptical","bn":"সংশয়ী","ex":"He is skeptical of claims."},{"sl":184,"word":"Spurious","bn":"ভুয়া","ex":"A spurious argument."},{"sl":185,"word":"Stagnant","bn":"স্থবির","ex":"Stagnant water."},{"sl":186,"word":"Stoic","bn":"আবেগদমনকারী","ex":"He remained stoic."},{"sl":187,"word":"Subtle","bn":"সূক্ষ্ম","ex":"A subtle difference."},{"sl":188,"word":"Superfluous","bn":"অতিরিক্ত","ex":"Cut superfluous details."},{"sl":189,"word":"Suppress","bn":"দমন করা","ex":"Truth was suppressed."},{"sl":190,"word":"Tenacious","bn":"দৃঢ়প্রতিজ্ঞ","ex":"A tenacious fighter."},{"sl":191,"word":"Timorous","bn":"ভীতু","ex":"A timorous child."},{"sl":192,"word":"Tranquil","bn":"নিরিবিলি","ex":"A tranquil village."},{"sl":193,"word":"Transient","bn":"ক্ষণস্থায়ী","ex":"Transient pleasure."},{"sl":194,"word":"Ubiquitous","bn":"সর্বত্র বিদ্যমান","ex":"Smartphones are ubiquitous."},{"sl":195,"word":"Unanimous","bn":"সর্বসম্মত","ex":"A unanimous verdict."},{"sl":196,"word":"Unprecedented","bn":"নজিরবিহীন","ex":"An unprecedented event."},{"sl":197,"word":"Vacillate","bn":"দোদুল্যমান হওয়া","ex":"He vacillated between choices."},{"sl":198,"word":"Venerate","bn":"শ্রদ্ধা করা","ex":"People venerate heroes."},{"sl":199,"word":"Veracity","bn":"সত্যতা","ex":"Question his veracity."},{"sl":200,"word":"Versatile","bn":"বহুমুখী","ex":"A versatile actor."},{"sl":201,"word":"Vicarious","bn":"পরোক্ষ","ex":"Vicarious pleasure."},{"sl":202,"word":"Vigilant","bn":"সজাগ","ex":"Stay vigilant."},{"sl":203,"word":"Vindicate","bn":"নির্দোষ প্রমাণ করা","ex":"Facts vindicated her."},{"sl":204,"word":"Virtuoso","bn":"পারদর্শী","ex":"A piano virtuoso."},{"sl":205,"word":"Wary","bn":"সতর্ক","ex":"Be wary of fraud."},{"sl":206,"word":"Whimsical","bn":"খেয়ালখুশি","ex":"A whimsical idea."},{"sl":207,"word":"Zealous","bn":"উদ্দীপ্ত","ex":"A zealous supporter."},{"sl":208,"word":"Aberrant","bn":"অস্বাভাবিক","ex":"Aberrant behavior."},{"sl":209,"word":"Accolade","bn":"সম্মাননা","ex":"He received accolades."},{"sl":210,"word":"Aesthetic","bn":"নান্দনিক","ex":"Aesthetic sense matters."},{"sl":211,"word":"Altruistic","bn":"নিঃস্বার্থ","ex":"Altruistic behavior."},{"sl":212,"word":"Antipathy","bn":"বিদ্বেষ","ex":"She felt antipathy."},{"sl":213,"word":"Astringent","bn":"কঠোর","ex":"Astringent criticism."},{"sl":214,"word":"Belligerent","bn":"আক্রমণাত্মক","ex":"A belligerent attitude."},{"sl":215,"word":"Blatant","bn":"প্রকাশ্য","ex":"A blatant lie."},{"sl":216,"word":"Clandestine","bn":"গোপন","ex":"A clandestine meeting."},{"sl":217,"word":"Coherent","bn":"সংলগ্ন","ex":"A coherent argument."},{"sl":218,"word":"Compelling","bn":"প্রভাবশালী","ex":"A compelling story."},{"sl":219,"word":"Convoluted","bn":"জটিল","ex":"A convoluted explanation."},{"sl":220,"word":"Defiant","bn":"অবাধ্য","ex":"A defiant look."},{"sl":221,"word":"Devious","bn":"কুটিল","ex":"A devious plan."},{"sl":222,"word":"Didactic","bn":"শিক্ষামূলক","ex":"A didactic lesson."},{"sl":223,"word":"Disdain","bn":"তাচ্ছিল্য","ex":"He showed disdain."},{"sl":224,"word":"Eloquent","bn":"প্রাঞ্জল","ex":"An eloquent speaker."},{"sl":225,"word":"Exorbitant","bn":"অতিরিক্ত","ex":"Exorbitant price."},{"sl":226,"word":"Fastidious","bn":"খুঁতখুঁতে","ex":"A fastidious person."},{"sl":227,"word":"Futile","bn":"নিষ্ফল","ex":"Efforts were futile."},{"sl":228,"word":"Hinder","bn":"বাধা দেওয়া","ex":"Rain hindered progress."},{"sl":229,"word":"Illicit","bn":"অবৈধ","ex":"Illicit trade."},{"sl":230,"word":"Impeccable","bn":"নিখুঁত","ex":"Impeccable manners."},{"sl":231,"word":"Implicit","bn":"অন্তর্নিহিত","ex":"An implicit message."},{"sl":232,"word":"Incessant","bn":"অবিরাম","ex":"Incessant rain."},{"sl":233,"word":"Laud","bn":"প্রশংসা করা","ex":"Critics lauded him."},{"sl":234,"word":"Morose","bn":"বিষণ্ণ","ex":"He looked morose."},{"sl":235,"word":"Novice","bn":"নবীন","ex":"A novice player."},{"sl":236,"word":"Ominous","bn":"অশুভ","ex":"An ominous sign."},{"sl":237,"word":"Ostensible","bn":"আপাত","ex":"Ostensible reason."},{"sl":238,"word":"Perfunctory","bn":"তাচ্ছিল্যমূলক","ex":"A perfunctory reply."},{"sl":239,"word":"Plausible","bn":"বিশ্বাসযোগ্য","ex":"A plausible excuse."},{"sl":240,"word":"Preempt","bn":"আগেই রোধ করা","ex":"Act to preempt danger."},{"sl":241,"word":"Pretentious","bn":"ভানপূর্ণ","ex":"Pretentious speech."},{"sl":242,"word":"Reconcile","bn":"মীমাংসা করা","ex":"They reconciled differences."},{"sl":243,"word":"Relentless","bn":"নিরলস","ex":"Relentless effort."},{"sl":244,"word":"Scathing","bn":"সমালোচনামূলক","ex":"Scathing criticism."},{"sl":245,"word":"Sporadic","bn":"বিক্ষিপ্ত","ex":"Sporadic violence."},{"sl":246,"word":"Stern","bn":"কঠোর","ex":"A stern warning."},{"sl":247,"word":"Terse","bn":"সংক্ষিপ্ত","ex":"A terse reply."},{"sl":248,"word":"Unwarranted","bn":"অযৌক্তিক","ex":"Unwarranted fear."},{"sl":249,"word":"Viable","bn":"কার্যকর","ex":"A viable solution."},{"sl":250,"word":"Wistful","bn":"বিষণ্ণমুখর","ex":"A wistful smile."},{"sl":251,"word":"Abstruse","bn":"দুর্বোধ্য","ex":"The theory is abstruse."},{"sl":252,"word":"Acumen","bn":"তীক্ষ্ণ বুদ্ধিমত্তা","ex":"She has business acumen."},{"sl":253,"word":"Adequate","bn":"যথেষ্ট","ex":"The explanation was adequate."},{"sl":254,"word":"Adverse","bn":"প্রতিকূল","ex":"Adverse weather delayed flights."},{"sl":255,"word":"Affinity","bn":"আকর্ষণ","ex":"He has an affinity for music."},{"sl":256,"word":"Agitate","bn":"উত্তেজিত করা","ex":"The speech agitated the crowd."},{"sl":257,"word":"Allay","bn":"প্রশমিত করা","ex":"Words allayed her fears."},{"sl":258,"word":"Amicable","bn":"বন্ধুত্বপূর্ণ","ex":"They reached an amicable solution."},{"sl":259,"word":"Anomaly","bn":"ব্যতিক্রম","ex":"The result was an anomaly."},{"sl":260,"word":"Antithesis","bn":"সম্পূর্ণ বিপরীত","ex":"Chaos is the antithesis of order."},{"sl":261,"word":"Arbitrary","bn":"খেয়ালখুশিমতো","ex":"An arbitrary decision."},{"sl":262,"word":"Arcane","bn":"গূঢ়","ex":"Arcane knowledge."},{"sl":263,"word":"Avert","bn":"প্রতিহত করা","ex":"He averted disaster."},{"sl":264,"word":"Bewilder","bn":"বিভ্রান্ত করা","ex":"The news bewildered him."},{"sl":265,"word":"Clandestine","bn":"গোপন","ex":"A clandestine operation."},{"sl":266,"word":"Coalesce","bn":"একত্রিত হওয়া","ex":"The groups coalesced."},{"sl":267,"word":"Conform","bn":"অনুসরণ করা","ex":"Conform to rules."},{"sl":268,"word":"Constrain","bn":"সীমাবদ্ধ করা","ex":"Budget constrained us."},{"sl":269,"word":"Converge","bn":"মিলিত হওয়া","ex":"Ideas converged."},{"sl":270,"word":"Corroborate","bn":"সমর্থন করা","ex":"Evidence corroborated her claim."},{"sl":271,"word":"Deference","bn":"শ্রদ্ধা","ex":"He spoke with deference."},{"sl":272,"word":"Detrimental","bn":"ক্ষতিকর","ex":"Smoking is detrimental."},{"sl":273,"word":"Diffuse","bn":"ছড়িয়ে দেওয়া","ex":"Light diffused softly."},{"sl":274,"word":"Discrepancy","bn":"অসামঞ্জস্য","ex":"A discrepancy in data."},{"sl":275,"word":"Elucidate","bn":"ব্যাখ্যা করা","ex":"Please elucidate the point."},{"sl":276,"word":"Emulate","bn":"অনুসরণ করা","ex":"He emulates his mentor."},{"sl":277,"word":"Encompass","bn":"অন্তর্ভুক্ত করা","ex":"The course encompasses basics."},{"sl":278,"word":"Execrable","bn":"জঘন্য","ex":"Execrable behavior."},{"sl":279,"word":"Extrapolate","bn":"অনুমান করা","ex":"Scientists extrapolated results."},{"sl":280,"word":"Fathom","bn":"গভীরভাবে বোঝা","ex":"I can't fathom it."},{"sl":281,"word":"Fortuitous","bn":"সৌভাগ্যজনক","ex":"A fortuitous meeting."},{"sl":282,"word":"Garrulous","bn":"বাচাল","ex":"A garrulous neighbor."},{"sl":283,"word":"Harangue","bn":"দীর্ঘ বক্তৃতা","ex":"He gave a harangue."},{"sl":284,"word":"Impeach","bn":"অভিশংসন করা","ex":"The president was impeached."},{"sl":285,"word":"Implore","bn":"অনুরোধ করা","ex":"She implored help."},{"sl":286,"word":"Incumbent","bn":"দায়িত্বপ্রাপ্ত","ex":"Duties are incumbent on him."},{"sl":287,"word":"Induce","bn":"প্ররোচিত করা","ex":"The drug induces sleep."},{"sl":288,"word":"Inundate","bn":"প্লাবিত করা","ex":"The city was inundated."},{"sl":289,"word":"Invalidate","bn":"বাতিল করা","ex":"The rule was invalidated."},{"sl":290,"word":"Latent","bn":"সুপ্ত","ex":"Latent talent emerged."},{"sl":291,"word":"Lucrative","bn":"লাভজনক","ex":"A lucrative job."},{"sl":292,"word":"Mitigate","bn":"প্রশমিত করা","ex":"Steps mitigated risk."},{"sl":293,"word":"Myriad","bn":"অসংখ্য","ex":"A myriad of options."},{"sl":294,"word":"Obscure","bn":"অস্পষ্ট","ex":"The text is obscure."},{"sl":295,"word":"Palpable","bn":"স্পষ্ট অনুভূত","ex":"Palpable tension."},{"sl":296,"word":"Pensive","bn":"চিন্তামগ্ন","ex":"A pensive look."},{"sl":297,"word":"Placate","bn":"শান্ত করা","ex":"He placated critics."},{"sl":298,"word":"Proclivity","bn":"প্রবণতা","ex":"A proclivity for art."},{"sl":299,"word":"Prohibit","bn":"নিষিদ্ধ করা","ex":"Smoking is prohibited."}];
+
+/* ════ STATE ════ */
+let starred = new Set(JSON.parse(localStorage.getItem('sat-starred')||'[]'));
+let currentMode = 'browse';
+let currentFilter = 'all';
+let searchQ = '';
+let activeAlpha = '';
+let quizTotal = parseInt(localStorage.getItem('sat-quizzed')||'0');
+let fcIndex = 0;
+let fcList = [...WORDS];
+let fcStarredOnly = false;
+let qzIndex = 0;
+let qzScore = 0;
+let qzAnswered = false;
+let qzCorrectWord = '';
+let modalIndex = -1;
+
+/* ════ SAVE ════ */
+function saveStarred(){
+  localStorage.setItem('sat-starred', JSON.stringify([...starred]));
+  document.getElementById('c-starred').textContent = starred.size;
+}
+function saveQuizzed(n){
+  quizTotal = n;
+  localStorage.setItem('sat-quizzed', n);
+  document.getElementById('c-quiz').textContent = n;
+}
+
+/* ════ INIT ════ */
+function init(){
+  document.getElementById('c-starred').textContent = starred.size;
+  document.getElementById('c-quiz').textContent = quizTotal;
+  buildAlphaNav();
+  renderWords();
+}
+
+/* ════ ALPHABET NAV ════ */
+function buildAlphaNav(){
+  const nav = document.getElementById('alpha-nav');
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const available = new Set(WORDS.map(w=>w.word[0].toUpperCase()));
+  nav.innerHTML = letters.map(l=>`
+    <button class="al-btn ${!available.has(l)?'empty':''}" onclick="setAlpha('${l}',this)">${l}</button>
+  `).join('');
+}
+
+function setAlpha(l, btn){
+  if(activeAlpha===l){ activeAlpha=''; document.querySelectorAll('.al-btn').forEach(b=>b.classList.remove('on')); }
+  else {
+    activeAlpha=l;
+    document.querySelectorAll('.al-btn').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+  }
+  renderWords();
+}
+
+/* ════ FILTER ════ */
+function setFilter(f, btn){
+  currentFilter = f;
+  document.querySelectorAll('#filter-row .mtab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderWords();
+}
+
+/* ════ SEARCH ════ */
+function applySearch(q){
+  searchQ = q.toLowerCase().trim();
+  activeAlpha = '';
+  document.querySelectorAll('.al-btn').forEach(b=>b.classList.remove('on'));
+  renderWords();
+  // switch to browse if not there
+  if(currentMode!=='browse'){
+    setMode('browse', document.querySelector('[data-mode="browse"]'));
+  }
+}
+
+/* ════ FILTERED LIST ════ */
+function getFiltered(){
+  let list = WORDS;
+  if(currentFilter==='starred') list = list.filter(w=>starred.has(w.sl));
+  if(activeAlpha) list = list.filter(w=>w.word[0].toUpperCase()===activeAlpha);
+  if(searchQ) list = list.filter(w=>
+    w.word.toLowerCase().includes(searchQ) ||
+    w.bn.includes(searchQ) ||
+    (EN[w.word]||'').toLowerCase().includes(searchQ)
+  );
+  return list;
+}
+
+/* ════ RENDER WORDS ════ */
+function renderWords(){
+  const grid = document.getElementById('word-grid');
+  const empty = document.getElementById('empty-state');
+  const fcount = document.getElementById('fc-count');
+  const list = getFiltered();
+  fcount.textContent = list.length + ' word' + (list.length!==1?'s':'');
+
+  // starred empty
+  const se = document.getElementById('starred-empty');
+  if(currentMode==='starred'){
+    if(starred.size===0){ se.style.display='block'; grid.innerHTML=''; return; }
+    se.style.display='none';
+  } else { se.style.display='none'; }
+
+  if(list.length===0){
+    empty.style.display='block'; grid.innerHTML=''; return;
+  }
+  empty.style.display='none';
+
+  grid.innerHTML = list.map((w,i)=>{
+    const en = EN[w.word]||'';
+    const isStarred = starred.has(w.sl);
+    return `<div class="wcard ${isStarred?'starred':''}"
+      onclick="openModal(${w.sl})"
+      style="animation-delay:${Math.min(i*.03,0.5)}s">
+      <div class="wcard-top">
+        <div>
+          <div class="wnum">#${String(w.sl).padStart(3,'0')}</div>
+          <div class="wword">${w.word}</div>
+        </div>
+        <button class="star-btn" onclick="event.stopPropagation();toggleStar(${w.sl},this)">${isStarred?'★':'☆'}</button>
+      </div>
+      ${en?`<div class="wen">${en}</div>`:''}
+      <div class="wbn">${w.bn}</div>
+      <div class="wex">${w.ex}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ════ STAR ════ */
+function toggleStar(sl, btn){
+  if(starred.has(sl)){ starred.delete(sl); btn.textContent='☆'; btn.closest('.wcard').classList.remove('starred'); }
+  else { starred.add(sl); btn.textContent='★'; btn.closest('.wcard').classList.add('starred'); }
+  saveStarred();
+  if(currentFilter==='starred'||currentMode==='starred') renderWords();
+}
+
+/* ════ MODAL ════ */
+function openModal(sl){
+  const w = WORDS.find(x=>x.sl===sl);
+  if(!w)return;
+  modalIndex = WORDS.indexOf(w);
+  fillModal(w);
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function fillModal(w){
+  document.getElementById('m-num').textContent = '#'+String(w.sl).padStart(3,'0');
+  document.getElementById('m-word').textContent = w.word;
+  document.getElementById('m-en').textContent = EN[w.word]||'';
+  document.getElementById('m-bn').textContent = w.bn;
+  document.getElementById('m-ex').textContent = w.ex;
+  const s = document.getElementById('m-star');
+  if(starred.has(w.sl)){ s.textContent='★ Starred'; s.classList.add('on'); }
+  else { s.textContent='☆ Star'; s.classList.remove('on'); }
+}
+function toggleModalStar(){
+  const w = WORDS[modalIndex];
+  if(!w)return;
+  const s = document.getElementById('m-star');
+  if(starred.has(w.sl)){ starred.delete(w.sl); s.textContent='☆ Star'; s.classList.remove('on'); }
+  else { starred.add(w.sl); s.textContent='★ Starred'; s.classList.add('on'); }
+  saveStarred();
+  renderWords();
+}
+function modalNav(dir){
+  const list = getFiltered();
+  const curW = WORDS[modalIndex];
+  const pos = list.findIndex(x=>x.sl===curW.sl);
+  const next = list[(pos+dir+list.length)%list.length];
+  if(next){ modalIndex=WORDS.indexOf(next); fillModal(next); }
+}
+function closeModalDirect(){ document.getElementById('modal-overlay').classList.remove('open'); }
+function closeModal(e){ if(e.target===document.getElementById('modal-overlay')) closeModalDirect(); }
+
+/* ════ MODE ════ */
+function setMode(mode, btn){
+  currentMode = mode;
+  document.querySelectorAll('.mtab[data-mode]').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('browse-wrap').style.display='none';
+  document.getElementById('flashcard-wrap').style.display='none';
+  document.getElementById('quiz-wrap').style.display='none';
+  document.getElementById('starred-empty').style.display='none';
+
+  if(mode==='browse'){ document.getElementById('browse-wrap').style.display='block'; renderWords(); }
+  else if(mode==='flash'){ document.getElementById('flashcard-wrap').style.display='flex'; initFlash(); }
+  else if(mode==='quiz'){ document.getElementById('quiz-wrap').style.display='flex'; startQuiz(); }
+  else if(mode==='starred'){
+    document.getElementById('browse-wrap').style.display='block';
+    currentFilter='starred';
+    document.querySelectorAll('#filter-row .mtab').forEach(b=>b.classList.remove('on'));
+    document.querySelector('#filter-row .mtab').classList.remove('on');
+    renderWords();
+  }
+}
+
+/* ════ FLASHCARD ════ */
+function initFlash(){
+  fcList = fcStarredOnly ? WORDS.filter(w=>starred.has(w.sl)) : [...WORDS];
+  if(fcList.length===0) fcList=[...WORDS];
+  fcIndex=0;
+  renderFlash();
+}
+function renderFlash(){
+  const w = fcList[fcIndex];
+  document.getElementById('fc-card').classList.remove('flipped');
+  document.getElementById('fc-word').textContent = w.word;
+  document.getElementById('fc-bn').textContent = w.bn;
+  document.getElementById('fc-en').textContent = EN[w.word]||'';
+  document.getElementById('fc-ex').textContent = w.ex;
+  document.getElementById('fc-prog').textContent = `${fcIndex+1} / ${fcList.length}`;
+  document.getElementById('fc-prev').disabled = fcIndex===0;
+}
+function flipCard(){ document.getElementById('fc-card').classList.toggle('flipped'); }
+function fcNav(dir){
+  fcIndex = (fcIndex+dir+fcList.length)%fcList.length;
+  renderFlash();
+}
+function shuffleFlash(){
+  fcList.sort(()=>Math.random()-.5); fcIndex=0; renderFlash();
+}
+function resetFlash(){ fcIndex=0; renderFlash(); }
+function starredOnlyFlash(){
+  fcStarredOnly=!fcStarredOnly;
+  document.getElementById('fc-star-toggle').style.opacity=fcStarredOnly?.5:1;
+  initFlash();
+}
+
+/* ════ QUIZ ════ */
+let qzList=[];
+function startQuiz(){
+  qzList = [...WORDS].sort(()=>Math.random()-.5).slice(0,20);
+  qzIndex=0; qzScore=0; qzAnswered=false;
+  document.getElementById('qz-result').classList.remove('show');
+  document.getElementById('qz-question-block').style.display='block';
+  document.getElementById('qz-next').classList.remove('show');
+  document.getElementById('qz-feedback').classList.remove('show');
+  document.getElementById('qz-score').textContent='0 / 0';
+  renderQuestion();
+}
+function renderQuestion(){
+  if(qzIndex>=qzList.length){ endQuiz(); return; }
+  qzAnswered=false;
+  const w = qzList[qzIndex];
+  qzCorrectWord = w.word;
+  document.getElementById('qz-next').classList.remove('show');
+  document.getElementById('qz-feedback').classList.remove('show','ok','bad');
+  document.getElementById('qz-score').textContent = qzScore + ' / ' + qzIndex;
+
+  // random question type
+  const type = Math.random()<.5 ? 'en2bn' : 'bn2en';
+  if(type==='en2bn'){
+    document.getElementById('qz-qtype').textContent = 'WHAT IS THE BENGALI MEANING?';
+    document.getElementById('qz-qword').textContent = w.word;
+    document.getElementById('qz-qsub').textContent = EN[w.word]||'';
+    // options: 4 Bengali meanings
+    const pool = WORDS.filter(x=>x.sl!==w.sl).sort(()=>Math.random()-.5).slice(0,3);
+    const opts = [w.bn, ...pool.map(x=>x.bn)].sort(()=>Math.random()-.5);
+    renderOpts(opts, w.bn, false);
+  } else {
+    document.getElementById('qz-qtype').textContent = 'WHICH WORD MATCHES THIS MEANING?';
+    document.getElementById('qz-qword').textContent = w.bn;
+    document.getElementById('qz-qsub').textContent = w.ex;
+    const pool = WORDS.filter(x=>x.sl!==w.sl).sort(()=>Math.random()-.5).slice(0,3);
+    const opts = [w.word, ...pool.map(x=>x.word)].sort(()=>Math.random()-.5);
+    renderOpts(opts, w.word, true);
+  }
+}
+function renderOpts(opts, correct, isWord){
+  const cont = document.getElementById('qz-opts');
+  cont.innerHTML = opts.map(o=>`
+    <button class="qz-opt" onclick="answerQ('${o.replace(/'/g,"\\'")}','${correct.replace(/'/g,"\\'")}',this)">
+      ${isWord?o:`<span style="font-family:'Noto Sans Bengali','Poppins',sans-serif">${o}</span>`}
+    </button>`).join('');
+}
+function answerQ(chosen, correct, btn){
+  if(qzAnswered)return;
+  qzAnswered=true;
+  const opts = document.querySelectorAll('.qz-opt');
+  opts.forEach(b=>b.disabled=true);
+  const fb = document.getElementById('qz-feedback');
+  if(chosen===correct){
+    btn.classList.add('correct'); qzScore++;
+    fb.textContent='✓ Correct! "'+correct+'"'; fb.className='qz-feedback show ok';
+  } else {
+    btn.classList.add('wrong');
+    opts.forEach(b=>{ if(b.textContent.trim()===correct||b.innerHTML.includes(correct)) b.classList.add('correct'); });
+    fb.textContent='✗ Wrong. Correct: "'+correct+'"'; fb.className='qz-feedback show bad';
+  }
+  document.getElementById('qz-score').textContent = qzScore + ' / ' + (qzIndex+1);
+  document.getElementById('qz-next').classList.add('show');
+  saveQuizzed(quizTotal+1);
+}
+function nextQuestion(){ qzIndex++; renderQuestion(); }
+function endQuiz(){
+  document.getElementById('qz-question-block').style.display='none';
+  const pct = Math.round(qzScore/qzList.length*100);
+  document.getElementById('qz-final-score').textContent = qzScore+'/'+qzList.length;
+  document.getElementById('qz-result-lbl').textContent = pct>=80?'Excellent! 🔥':pct>=60?'Good job! 👍':'Keep practicing! 💪';
+  document.getElementById('qz-result').classList.add('show');
+}
+
+/* ════ THEME ════ */
+function setTheme(t, btn){
+  document.body.setAttribute('data-theme',t);
+  document.querySelectorAll('.tdot').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  localStorage.setItem('sat-theme',t);
+}
+
+/* ════ READING PROGRESS ════ */
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY, h=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('prog-bar').style.width=(h>0?s/h*100:0)+'%';
+  document.getElementById('btt').classList.toggle('vis',s>300);
+});
+
+/* ════ KEYBOARD ════ */
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('modal-overlay').classList.contains('open')){
+    if(e.key==='Escape') closeModalDirect();
+    if(e.key==='ArrowRight') modalNav(1);
+    if(e.key==='ArrowLeft') modalNav(-1);
+  }
+  if(currentMode==='flash'){
+    if(e.key==='ArrowRight'||e.key==='l') fcNav(1);
+    if(e.key==='ArrowLeft'||e.key==='j') fcNav(-1);
+    if(e.key===' '||e.key==='f') flipCard();
+  }
+});
+
+/* ════ RESTORE PREFS ════ */
+window.addEventListener('DOMContentLoaded',()=>{
+  const t=localStorage.getItem('sat-theme')||'dark';
+  document.body.setAttribute('data-theme',t);
+  document.querySelectorAll('.tdot').forEach(b=>{
+    if(b.getAttribute('onclick').includes("'"+t+"'")) b.classList.add('on');
+    else b.classList.remove('on');
+  });
+  init();
+});
+</script>
+</body>
+</html>
